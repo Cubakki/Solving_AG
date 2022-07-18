@@ -9,7 +9,7 @@ inf=1
 def Main():
     while inf!=0:
         input()
-        print(1)
+        logger.info("新循环开始")
         try:
             Concept_Manager("1#1#1")
             pass

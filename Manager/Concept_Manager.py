@@ -1,8 +1,9 @@
 #管理所有Concept
-from Support.Checking_Process import Check_Code,Apply_Code
+from Support.Checking_Process import Check_Code
 from Support.Exception import CheckCodeError
 import logging
 import inspect
+import re
 
 class Concept_Manager:
     def __init__(self,check_code : str):
@@ -13,7 +14,7 @@ class Concept_Manager:
         else:
             for module in module_list:
                 self.Concept_Importer(module)
-        self.show_concept_types()
+        self.Show_Concept_Types()
         self.a=BasicConcept(1,2)
 
     def Concept_Importer(self,num):
@@ -28,7 +29,10 @@ class Concept_Manager:
             self.logger.info("成功导入Concept模块MetaConcept:BasicConcept,Point,Line,Oval")
         return True
 
-    def show_concept_types(self):
+    def Show_Concept_Types(self):
+        self.concept_types=[]
         for item in globals().items():
             if inspect.isclass(item[1])==True:
-                print(item[1])
+                if 'Library' in str(item[1]):
+                    self.concept_types.append(re.findall('\.(\w+)\'',str(item[1]))[0])
+        self.logger.info("已导入的模块:{}".format(str(self.concept_types).replace("[","").replace("]","")))
