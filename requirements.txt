@@ -1,1 +1,2 @@
-PyYAML
+PyYAML==6.0
+sympy==1.10.1
